@@ -1,0 +1,100 @@
+.sidebar {
+    background-color: #020617;
+    border-right: 1px solid #1e293b;
+    width: 280px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    color: #94a3b8;
+    transition: all 0.2s;
+    position: relative;
+    font-weight: 500;
+    margin: 2px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.nav-item i {
+    margin-right: 16px;
+    width: 20px;
+    height: 20px;
+}
+
+.nav-item:hover {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.active-nav {
+    background-color: rgba(20, 184, 166, 0.08) !important;
+    color: #14b8a6 !important;
+}
+
+.active-nav::after {
+    content: '';
+    position: absolute;
+    right: -13px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #14b8a6;
+    border-radius: 4px 0 0 4px;
+}
+
+/* --- TABLE STYLING --- */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+th {
+    text-align: left;
+    padding: 12px 16px;
+    color: #64748b;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+td {
+    padding: 16px;
+    background-color: rgba(15, 23, 42, 0.4);
+    border-top: 1px solid #1e293b;
+    border-bottom: 1px solid #1e293b;
+}
+
+td:first-child {
+    border-left: 1px solid #1e293b;
+    border-radius: 12px 0 0 12px;
+}
+
+td:last-child {
+    border-right: 1px solid #1e293b;
+    border-radius: 0 12px 12px 0;
+}
+
+.card {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+}
+
+.dropdown-animate {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-btn {
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 4px;
+}
+
+.filter-btn.active {
+    color: #14b8a6;
+    border-color: #14b8a6;
+}

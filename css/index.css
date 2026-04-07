@@ -1,0 +1,24 @@
+.portal-card {
+    background-color: rgba(15, 23, 42, 0.3);
+    /* Slate 900 tint */
+    border: 1px solid #1e293b;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.portal-card:hover {
+    border-color: #14b8a6;
+    /* Teal 500 */
+    background-color: rgba(20, 184, 166, 0.05);
+    transform: translateY(-2px);
+}
+
+.icon-box-admin {
+    background-color: rgba(20, 184, 166, 0.1);
+    color: #14b8a6;
+}
+
+.icon-box-rider {
+    background-color: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+}

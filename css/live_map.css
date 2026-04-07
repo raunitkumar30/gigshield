@@ -1,0 +1,128 @@
+.sidebar {
+    background-color: #020617;
+    border-right: 1px solid #1e293b;
+    width: 280px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    color: #94a3b8;
+    transition: all 0.2s;
+    position: relative;
+    font-weight: 500;
+    margin: 2px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.nav-item i {
+    margin-right: 16px;
+    width: 20px;
+    height: 20px;
+}
+
+.active-nav {
+    background-color: rgba(20, 184, 166, 0.08) !important;
+    color: #14b8a6 !important;
+}
+
+.active-nav::after {
+    content: '';
+    position: absolute;
+    right: -13px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #14b8a6;
+    border-radius: 4px 0 0 4px;
+}
+
+/* --- MAP GRID STYLING --- */
+.zone-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+    align-content: start;
+}
+
+.zone-pill {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 8px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    color: #14b8a6;
+    background: rgba(20, 184, 166, 0.05);
+    transition: all 0.4s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.25;
+    min-height: 44px;
+}
+
+.zone-pill:hover {
+    background: rgba(20, 184, 166, 0.1);
+}
+
+/* Alert state — pulsing red */
+.zone-pill.alert {
+    border-color: #ef4444;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Payout complete state — solid teal glow */
+.zone-pill.payout-complete {
+    border-color: #14b8a6;
+    color: #ffffff;
+    background: rgba(20, 184, 166, 0.25);
+    animation: pulse-green 2.5s ease 1;
+    box-shadow: 0 0 8px rgba(20, 184, 166, 0.3);
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.5); }
+    50% { box-shadow: 0 0 12px 4px rgba(20, 184, 166, 0.3); }
+    100% { box-shadow: 0 0 8px rgba(20, 184, 166, 0.3); }
+}
+
+.card {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+}
+
+.dropdown-animate {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- TOAST SYSTEM --- */
+@keyframes toast-in {
+    from { opacity: 0; transform: translateX(80px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toast-out {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(80px); }
+}
+
+.toast-enter {
+    animation: toast-in 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.toast-exit {
+    animation: toast-out 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}

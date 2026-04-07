@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claims & Payouts | GigShield Admin</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/claims_payouts.css">
+</head>
+
+<body class="flex h-screen">
+
+    <!-- Auth guard -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/env.js"></script>
+    <script src="js/store.js"></script>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar flex flex-col h-full shrink-0 py-6">
+        <div class="px-8 mb-10 flex items-center space-x-3">
+            <div class="p-2 bg-teal-500/10 rounded-lg border border-teal-500/20"><i data-lucide="shield"
+                    class="w-6 h-6 text-teal-500"></i></div>
+            <div>
+                <h1 class="text-lg font-bold leading-none">GigShield</h1>
+                <p class="text-[10px] text-gray-500 uppercase mt-1 font-bold">Admin Portal</p>
+            </div>
+        </div>
+        <nav class="flex-1 space-y-1">
+            <a href="admin_dashboard.html" class="nav-item"><i data-lucide="layout-grid"></i><span>Overview</span></a>
+            <a href="rider_management.html" class="nav-item"><i data-lucide="users"></i><span>Rider
+                    Management</span></a>
+            <a href="live_map.html" class="nav-item"><i data-lucide="map"></i><span>Live Disruption Map</span></a>
+            <a href="fraud_detection.html" class="nav-item"><i data-lucide="shield-alert"></i><span>Fraud
+                    Detection</span></a>
+            <a href="claims_payouts.html" class="nav-item active-nav"><i data-lucide="file-text"></i><span>Claims &
+                    Payouts</span></a>
+            <a href="admin_panel.html" class="nav-item"><i data-lucide="settings"></i><span>Admin Panel</span></a>
+        </nav>
+        <div class="px-8 mt-auto space-y-4">
+            <div class="flex items-center justify-between text-[11px] text-gray-500 font-medium"><span>Powered by
+                    AI</span><span class="text-emerald-500 flex items-center">● Online</span></div>
+            <button id="sidebar-signout"
+                class="flex items-center text-gray-500 hover:text-white text-sm font-medium transition-colors"><i
+                    data-lucide="log-out" class="w-4 h-4 mr-3"></i>Sign Out</button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-1 flex flex-col overflow-y-auto bg-slate-950">
+
+        <!-- HEADER -->
+        <header
+            class="flex items-center justify-between px-8 py-4 border-b border-slate-900 sticky top-0 bg-slate-950/80 backdrop-blur-md z-40">
+            <div
+                class="bg-red-500/10 text-red-500 px-3 py-1 rounded-full flex items-center text-[10px] font-bold border border-red-500/20">
+                <span class="w-1.5 h-1.5 bg-red-500 rounded-full mr-2 animate-pulse"></span> LIVE
+            </div>
+            <div class="flex items-center space-x-6 text-gray-400">
+                <!-- LOCATION API -->
+                <div class="flex items-center text-xs font-medium"><i data-lucide="map-pin"
+                        class="w-3.5 h-3.5 mr-1.5 text-teal-500"></i><span id="user-location">Detecting...</span>
+                </div>
+
+                <!-- NOTIFICATION -->
+                <div class="relative">
+                    <button id="notification-toggle" class="relative hover:text-white focus:outline-none"><i
+                            data-lucide="bell" class="w-5 h-5"></i><span
+                            class="absolute -top-1 -right-1 bg-red-500 text-[8px] text-white font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full">2</span></button>
+                    <div id="notification-menu"
+                        class="hidden absolute right-0 mt-3 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden dropdown-animate">
+                        <div class="p-4 border-b border-slate-800 bg-slate-800/40 text-sm font-bold text-white">Payout
+                            Alerts</div>
+                        <div id="notifications-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILE -->
+                <div class="relative inline-block text-left">
+                    <button type="button" id="profile-toggle"
+                        class="flex items-center justify-center w-9 h-9 rounded-full bg-teal-600 text-white font-bold text-xs hover:ring-4 hover:ring-teal-500/20 transition-all focus:outline-none">AD</button>
+                    <div id="profile-menu"
+                        class="hidden absolute right-0 z-50 mt-3 w-64 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden dropdown-animate">
+                        <div class="px-4 py-4 bg-slate-800/40 border-b border-slate-800 flex items-center space-x-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold text-sm">
+                                AD</div>
+                            <div>
+                                <p class="text-sm font-bold text-white">Admin</p>
+                                <p class="text-[11px] text-gray-500">admin@gigshield.in</p>
+                            </div>
+                        </div>
+                        <div class="p-2"><button id="logout-btn"
+                                class="w-full text-left group flex items-center px-4 py-2.5 text-sm font-semibold text-rose-500 rounded-xl hover:bg-rose-500/10"><i
+                                    data-lucide="log-out" class="mr-3 h-4 w-4"></i> Sign Out</button></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="p-8 space-y-8">
+            <h2 class="text-2xl font-bold">Claims & Payouts</h2>
+
+            <!-- TABS -->
+            <div class="flex space-x-6 border-b border-slate-900 pb-px">
+                <button id="btn-active" onclick="switchTab('active')" class="tab-btn active">Active Claims</button>
+                <button id="btn-history" onclick="switchTab('history')" class="tab-btn">Payout History</button>
+            </div>
+
+            <!-- VIEW 1: ACTIVE CLAIMS -->
+            <div id="active-view" class="space-y-8">
+                <div class="card overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr>
+                                <th>Rider</th>
+                                <th>Zone</th>
+                                <th>Event</th>
+                                <th>Amount</th>
+                                <th>Fraud Score</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="active-claims-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Subscription Status</h3>
+                    <div class="grid grid-cols-2 gap-6" id="subscription-cards-container">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: PAYOUT HISTORY -->
+            <div id="history-view" class="hidden space-y-8 pb-10">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-3 gap-6">
+                    <div class="card p-6">
+                        <p class="text-[10px] text-gray-500 uppercase font-bold flex items-center"><i
+                                data-lucide="credit-card" class="w-3 h-3 mr-2"></i> Total Paid This Week</p>
+                        <h3 id="stat-total-paid" class="text-3xl font-bold mt-2">₹0</h3>
+                    </div>
+                    <div class="card p-6">
+                        <p class="text-[10px] text-gray-500 uppercase font-bold flex items-center"><i data-lucide="zap"
+                                class="w-3 h-3 mr-2"></i> Avg Payout</p>
+                        <h3 id="stat-avg-payout" class="text-3xl font-bold mt-2">₹0</h3>
+                    </div>
+                    <div class="card p-6">
+                        <p class="text-[10px] text-gray-500 uppercase font-bold flex items-center"><i
+                                data-lucide="clock" class="w-3 h-3 mr-2"></i> Fastest Payout</p>
+                        <h3 id="stat-fastest-payout" class="text-3xl font-bold mt-2 text-teal-400">0 min</h3>
+                    </div>
+                </div>
+
+                <!-- Bar Chart -->
+                <div class="card p-8">
+                    <h4 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6">Daily Payouts — Last 7
+                        Days</h4>
+                    <div class="h-[250px]"><canvas id="payoutBarChart"></canvas></div>
+                </div>
+
+                <!-- History Table -->
+                <div class="card overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-slate-900/30">
+                            <tr>
+                                <th>Rider</th>
+                                <th>Amount</th>
+                                <th>Zone</th>
+                                <th>Event</th>
+                                <th>Time</th>
+                                <th>UPI Ref</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm" id="payout-history-tbody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/claims_payouts.js" defer></script>
+</body>
+</html>

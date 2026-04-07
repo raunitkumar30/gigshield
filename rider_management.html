@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rider Management | GigShield Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/rider_management.css">
+</head>
+
+<body class="flex h-screen">
+
+    <!-- Auth Guard -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/env.js"></script>
+    <script src="js/store.js"></script>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar flex flex-col h-full shrink-0 py-6">
+        <div class="px-8 mb-10">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-teal-500/10 rounded-lg border border-teal-500/20"><i data-lucide="shield"
+                        class="w-6 h-6 text-teal-500"></i></div>
+                <div>
+                    <h1 class="text-lg font-bold leading-none">GigShield</h1>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-tighter mt-1 font-bold">Parametric Insurance
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="flex-1 space-y-1">
+            <a href="admin_dashboard.html" class="nav-item"><i data-lucide="layout-grid"></i><span>Overview</span></a>
+            <a href="rider_management.html" class="nav-item active-nav"><i data-lucide="users"></i><span>Rider
+                    Management</span></a>
+            <a href="live_map.html" class="nav-item"><i data-lucide="map"></i><span>Live Disruption Map</span></a>
+            <a href="fraud_detection.html" class="nav-item"><i data-lucide="shield-alert"></i><span>Fraud
+                    Detection</span></a>
+            <a href="claims_payouts.html" class="nav-item"><i data-lucide="file-text"></i><span>Claims &
+                    Payouts</span></a>
+            <a href="admin_panel.html" class="nav-item"><i data-lucide="settings"></i><span>Admin Panel</span></a>
+        </nav>
+
+        <div class="px-8 mt-auto space-y-4 text-gray-500">
+            <div class="flex items-center justify-between text-[11px] font-medium">
+                <span>Powered by AI</span><span class="text-emerald-500 flex items-center">● Online</span>
+            </div>
+            <button id="sidebar-signout" class="w-full flex items-center hover:text-white transition-colors text-sm font-medium">
+                <i data-lucide="log-out" class="w-4 h-4 mr-3"></i>Sign Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 flex flex-col overflow-y-auto bg-slate-950">
+
+        <!-- HEADER -->
+        <header
+            class="flex items-center justify-between px-8 py-4 border-b border-slate-900 sticky top-0 bg-slate-950/80 backdrop-blur-md z-40">
+            <div
+                class="bg-red-500/10 text-red-500 px-3 py-1 rounded-full flex items-center text-[10px] font-bold border border-red-500/20">
+                <span class="w-1.5 h-1.5 bg-red-500 rounded-full mr-2 animate-pulse"></span> LIVE
+            </div>
+
+            <div class="flex items-center space-x-6 text-gray-400">
+                <!-- DYNAMIC LOCATION SECTION -->
+                <div class="flex items-center text-xs font-medium">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5 mr-1.5 text-teal-500"></i>
+                    <span id="user-location">Detecting Location...</span>
+                </div>
+
+                <!-- NOTIFICATION BELL -->
+                <div class="relative">
+                    <button id="notification-toggle" class="relative hover:text-white focus:outline-none">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        <span
+                            class="absolute -top-1 -right-1 bg-red-500 text-[8px] text-white w-3.5 h-3.5 flex items-center justify-center rounded-full">2</span>
+                    </button>
+
+                    <!-- Notification Menu -->
+                    <div id="notification-menu"
+                        class="hidden absolute right-0 mt-3 w-80 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl z-50 overflow-hidden dropdown-animate">
+                        <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-800/40">
+                            <h4 class="text-sm font-bold text-white">Notifications</h4>
+                        </div>
+                        <div id="notifications-list" class="max-h-80 overflow-y-auto">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROFILE DROPDOWN -->
+                <div class="relative inline-block text-left" id="profile-component">
+                    <button type="button" id="profile-toggle"
+                        class="flex items-center justify-center w-9 h-9 rounded-full bg-teal-600 text-white font-bold text-xs hover:ring-4 hover:ring-teal-500/20 transition-all focus:outline-none">AD</button>
+                    <div id="profile-menu"
+                        class="hidden absolute right-0 z-50 mt-3 w-64 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden dropdown-animate">
+                        <div class="px-4 py-4 bg-slate-800/40 border-b border-slate-800 flex items-center space-x-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold text-sm">
+                                AD</div>
+                            <div class="overflow-hidden">
+                                <p class="text-sm font-bold text-white truncate">Admin Account</p>
+                                <p class="text-[11px] text-gray-500 truncate">admin@gigshield.in</p>
+                            </div>
+                        </div>
+                        <div class="p-2">
+                            <button id="logout-btn"
+                                class="w-full text-left group flex items-center px-4 py-2.5 text-sm font-semibold text-rose-500 rounded-xl hover:bg-rose-500/10 transition-all"><i
+                                    data-lucide="log-out" class="mr-3 h-4 w-4"></i> Sign Out</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </header>
+
+        <!-- CONTENT BODY -->
+        <div class="p-8 space-y-6">
+            <h2 class="text-2xl font-bold">Rider Management</h2>
+
+            <div class="flex items-center justify-between">
+                <div class="relative w-[450px]">
+                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
+                    <input type="text" id="riderSearch" placeholder="Search riders by name, zone, phone..."
+                        class="w-full bg-slate-900 border border-slate-800 rounded-xl py-3 pl-12 pr-4 text-sm text-white focus:border-teal-500 outline-none transition-all">
+                </div>
+                <div class="flex space-x-8 text-sm font-bold text-gray-500">
+                    <button id="filter-all-btn" onclick="filterBy('all', this)" class="filter-btn active">All</button>
+                    <button id="filter-active-btn" onclick="filterBy('Active', this)" class="filter-btn">Active</button>
+                    <button id="filter-pending-btn" onclick="filterBy('Pending', this)" class="filter-btn">Pending</button>
+                </div>
+            </div>
+
+
+            <!-- Data Table -->
+            <div class="overflow-x-auto">
+                <table id="riderTable">
+                    <thead>
+                        <tr>
+                            <th>Rider</th>
+                            <th>Zone</th>
+                            <th>Plan</th>
+                            <th>Status</th>
+                            <th>Claims</th>
+                            <th>Total Paid</th>
+                            <th>Fraud Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/rider_management.js" defer></script>
+</body>
+
+</html>

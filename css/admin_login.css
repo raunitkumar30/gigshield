@@ -1,0 +1,43 @@
+.login-card {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+}
+
+.input-field {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    transition: all 0.2s ease;
+}
+
+.input-field:focus {
+    border-color: #14b8a6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(20, 184, 166, 0.1);
+}
+
+.btn-teal {
+    background-color: #0d9488;
+    transition: all 0.2s ease;
+}
+
+.btn-teal:hover {
+    background-color: #14b8a6;
+    transform: translateY(-1px);
+}
+
+.error-banner {
+    background-color: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #f87171;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 12px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.error-banner.show {
+    display: flex;
+}

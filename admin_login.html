@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | GigShield</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/admin_login.css">
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Header Section -->
+    <div class="text-center mb-8">
+        <div
+            class="inline-flex items-center justify-center w-16 h-16 rounded-2xl border-2 border-teal-500/30 bg-teal-500/10 mb-4">
+            <i data-lucide="shield" class="w-8 h-8 text-teal-500"></i>
+        </div>
+        <h1 class="text-4xl font-bold text-white tracking-tight">GigShield</h1>
+        <p class="text-gray-400 text-xs uppercase tracking-[0.2em] mt-2 font-semibold">Parametric Insurance Platform</p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card w-full max-w-md rounded-3xl p-8 shadow-2xl">
+
+        <!-- Navigation Header -->
+        <div class="flex items-center space-x-3 mb-8">
+            <a href="index.html" class="flex items-center text-gray-400 hover:text-white text-sm transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-1"></i> Back
+            </a>
+            <span
+                class="bg-teal-500/10 text-teal-400 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md">
+                Admin Portal
+            </span>
+        </div>
+
+        <!-- Error Banner -->
+        <div id="error-banner" class="error-banner mb-6">
+            <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+            <span id="error-text">Access Denied — Invalid credentials</span>
+        </div>
+
+        <!-- Form -->
+        <form id="admin-form" class="space-y-6">
+            <!-- Email -->
+            <div>
+                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Email</label>
+                <input id="email" type="email" placeholder="User-Id"
+                    class="input-field w-full px-4 py-3 rounded-xl text-white placeholder-gray-600" required>
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-2">Password</label>
+                <div class="relative">
+                    <input id="password" type="password" placeholder="••••••••"
+                        class="input-field w-full px-4 py-3 rounded-xl text-white placeholder-gray-600" required>
+                    <button type="button" id="toggle-pw"
+                        class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-teal-400">
+                        <i data-lucide="eye" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sign In Button -->
+            <button type="submit" id="submit-btn" class="btn-teal w-full py-4 rounded-xl text-white font-bold text-sm">
+                Sign In
+            </button>
+        </form>
+
+        <!-- Demo Info Box -->
+        <div class="mt-8 p-3 rounded-xl bg-slate-950/50 border border-slate-800 text-center">
+            <p class="text-gray-500 text-[11px]">
+                <span class="font-bold text-gray-400">Demo:</span> admin@gigshield.in / admin123
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/env.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/admin_login.js" defer></script>
+</body>
+
+</html>

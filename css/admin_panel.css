@@ -1,0 +1,138 @@
+.sidebar {
+    background-color: #020617;
+    border-right: 1px solid #1e293b;
+    width: 280px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    color: #94a3b8;
+    transition: all 0.2s;
+    position: relative;
+    font-weight: 500;
+    margin: 2px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.nav-item i {
+    margin-right: 16px;
+    width: 20px;
+    height: 20px;
+}
+
+.active-nav {
+    background-color: rgba(20, 184, 166, 0.08) !important;
+    color: #14b8a6 !important;
+}
+
+.active-nav::after {
+    content: '';
+    position: absolute;
+    right: -13px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #14b8a6;
+    border-radius: 4px 0 0 4px;
+}
+
+.card {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+}
+
+.tab-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #94A3B8;
+    border-radius: 8px;
+    transition: all 0.2s;
+    background: transparent;
+    border: none;
+}
+
+.tab-btn.active {
+    color: #2DD4BF;
+    background-color: #0F2936;
+}
+
+/* Standalone Table Styles matching screenshot */
+.zone-table-container {
+    background-color: #151C2C;
+    border-radius: 8px;
+    border: 1px solid #1E293B;
+    overflow: hidden;
+}
+
+.zone-table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.zone-table-container th {
+    text-transform: uppercase;
+    font-size: 11px;
+    color: #94A3B8;
+    padding: 16px 24px;
+    border-bottom: 1px solid #1E293B;
+    font-weight: 600;
+}
+
+.zone-table-container td {
+    padding: 16px 24px;
+    border-bottom: 1px solid #1E293B;
+    font-size: 14px;
+    background-color: #151C2C;
+}
+
+.zone-table-container tr:last-child td { border-bottom: none; }
+.frozen-row td { opacity: 0.5; transition: opacity 0.3s; }
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0;
+}
+
+th {
+    text-align: left;
+    padding: 14px 16px;
+    color: #64748b;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-bottom: 1px solid #1e293b;
+}
+
+td {
+    padding: 14px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid #1e293b;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.risk-tag {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.dropdown-animate {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 100;
+}

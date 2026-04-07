@@ -1,0 +1,61 @@
+.auth-card {
+    background-color: #0f172a;
+    border: 1px solid #1e293b;
+}
+
+.input-field {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    color: white;
+    transition: border-color 0.2s;
+}
+
+.input-field:focus {
+    border-color: #facc15;
+    outline: none;
+}
+
+.btn-gold {
+    background-color: #facc15;
+    color: #020617;
+    font-weight: 700;
+}
+
+.tag-rider {
+    background-color: rgba(234, 179, 8, 0.1);
+    color: #eab308;
+}
+
+.error-banner {
+    background-color: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #f87171;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 12px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.error-banner.show {
+    display: flex;
+}
+
+.success-banner {
+    background-color: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: #34d399;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 12px;
+    display: none;
+    align-items: center;
+    gap: 8px;
+}
+
+.success-banner.show {
+    display: flex;
+}
