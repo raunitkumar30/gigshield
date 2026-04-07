@@ -5,7 +5,7 @@
   "crons": [
     {
       "path": "/api/weather-sync",
-      "schedule": "*/10 * * * *"
+      "schedule": "0 0 * * *"
     }
   ],
   "env": {
